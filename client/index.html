@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>OozeDues · Split the check without doing the math</title>
+<meta name="description" content="Upload a photo of the receipt. OozeDues reads every line item, you fix anything it got wrong, and everyone gets their number.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=1">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top"><i></i>OOZEDUES</a>
+    <div class="nav__links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#next">What's next</a>
+    </div>
+    <a class="nav__login" href="#auth" data-tab="login" id="navLogin">Log in</a>
+    <a class="nav__cta" href="#auth" data-tab="signup" id="navCta">Sign up</a>
+  </div>
+</nav>
+
+<header class="zone hero" id="top">
+  <div class="wrap hero__grid">
+
+    <div>
+      <p class="label">AI receipt splitting</p>
+      <h1>Split the check without doing <em>the math</em>.</h1>
+      <p class="hero__sub">Upload a photo of the receipt. OozeDues reads every line item, you fix anything it got wrong, and everyone gets their number. Tax included.</p>
+
+      <div class="btns">
+        <a class="btn btn--fill oozes oozes--pill" href="#auth" data-tab="signup" id="heroCta">Create an account</a>
+        <a class="btn btn--ghost" href="#how">See how it works</a>
+      </div>
+
+      <p class="trust">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 1.5 2.5 3.6v4c0 3.2 2.3 6.1 5.5 6.9 3.2-.8 5.5-3.7 5.5-6.9v-4L8 1.5Z" stroke="#41562A" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+        <span><b>A calculator, not a wallet.</b> OozeDues works out the numbers and stops there. It never holds, moves, or touches anyone's money.</span>
+      </p>
+    </div>
+
+    <div class="slipwrap">
+      <div class="slip">
+        <div class="slip__edge slip__edge--t"></div>
+
+        <div class="slip__head">
+          <div class="slip__merch">TAQUERÍA LUNA</div>
+          <div class="slip__addr">1204 N ORANGE AVE · ORLANDO, FL</div>
+        </div>
+
+        <div class="slip__meta">
+          <span>TABLE 12 · 3 GUESTS</span>
+          <span>07/18/26 8:42P</span>
+        </div>
+
+        <div class="items" id="items"></div>
+        <p class="edithint" id="edithint"></p>
+
+        <div class="totals">
+          <div class="row"><span class="row__name">Subtotal</span><span class="row__dots"></span><span class="row__amt" id="tSub">57.50</span></div>
+          <div class="row"><span class="row__name">Sales tax 6.5%</span><span class="row__dots"></span><span class="row__amt" id="tTax">3.74</span></div>
+          <div class="row"><span class="row__name">Tip 20%</span><span class="row__dots"></span><span class="row__amt" id="tTip">11.50</span></div>
+          <div class="row row--grand"><span class="row__name">TOTAL</span><span class="row__dots"></span><span class="row__amt" id="tTotal">72.74</span></div>
+        </div>
+
+        <div class="toggle" role="group" aria-label="Choose how to split">
+          <button type="button" id="bEven" aria-pressed="true">Split evenly</button>
+          <button type="button" id="bItem" aria-pressed="false">Split by item</button>
+        </div>
+
+        <div class="split__cap">Each person owes</div>
+        <div class="split" id="split" aria-live="polite"></div>
+
+        <p class="slipfoot" id="slipfoot"></p>
+        <div class="slip__edge slip__edge--b"></div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<section class="zone zone--paper" id="how">
+  <div class="wrap sec">
+    <div class="sec__head">
+      <p class="label">The flow</p>
+      <h2>Three steps between the check arriving and everyone knowing what they owe.</h2>
+    </div>
+
+    <div class="step rv">
+      <span class="step__n oozes">01</span>
+      <div>
+        <h3>Upload it</h3>
+        <p>Upload a photo of the receipt from your phone or your computer. The AI reads out every line item, the price, and the tax. If the image is not a receipt, it tells you right away instead of guessing.</p>
+      </div>
+    </div>
+    <div class="step rv">
+      <span class="step__n oozes">02</span>
+      <div>
+        <h3>Check it and split it</h3>
+        <p>Scan the lines and correct anything the AI misread. Then choose evenly or by item, putting one person or several on each line depending on who actually shared it.</p>
+      </div>
+    </div>
+    <div class="step rv">
+      <span class="step__n oozes">03</span>
+      <div>
+        <h3>Send it</h3>
+        <p>Everyone gets one clear number. Send the itemized bill out to the table by email or text, and it stays in your history either way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="zone" id="features">
+  <div class="wrap sec">
+    <div class="sec__head">
+      <p class="label">Features</p>
+      <h2>Built for the awkward part of dinner.</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card rv">
+        <h3>Two ways to split</h3>
+        <p>Evenly when the meal was simple, by item when it was not. Switch between them and the numbers update instantly.</p>
+      </div>
+      <div class="card rv">
+        <h3>Fix what the AI gets wrong</h3>
+        <p>Thermal paper smudges and fades, and no reader is perfect. Correct any price or name right on the receipt and every total recalculates as you type.</p>
+      </div>
+      <div class="card rv">
+        <h3>Shared plates, handled</h3>
+        <p>The appetizer everyone picked at goes on everyone who picked at it. Put as many people on a line as you need and its cost divides between them.</p>
+      </div>
+      <div class="card rv">
+        <h3>Both versions kept</h3>
+        <p>OozeDues stores what the AI first read and the version you corrected. Your history shows what changed, so nothing gets quietly rewritten after the fact.</p>
+      </div>
+      <div class="card rv">
+        <h3>Tax split in proportion</h3>
+        <p>Order $10 of a $50 bill and you cover a fifth of the tax. On $8 of tax that comes to $1.60, no matter how many people are at the table.</p>
+      </div>
+      <div class="card rv">
+        <h3>Not a receipt? It says so.</h3>
+        <p>Upload something that is not a receipt and OozeDues returns a clear error rather than inventing numbers that were never there.</p>
+      </div>
+      <div class="card rv">
+        <h3>Send it to the table</h3>
+        <p>Push the itemized split out to everyone by email or text, so nobody has to screenshot the screen and squint at it.</p>
+      </div>
+      <div class="card rv">
+        <h3>Your receipts, saved</h3>
+        <p>Open any recent meal and see exactly how it was split and who was on it. At least your last ten stay on file.</p>
+      </div>
+      <div class="card card--wide rv">
+        <h3>Down to the last cent</h3>
+        <p>Three people and a $72.74 check will not divide evenly, and neither will a plate shared three ways. OozeDues hands each leftover cent to one person and tells you who got it, so the parts always add back up to the total exactly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="zone zone--deep zone--pour" id="auth">
+  <div class="wrap sec">
+    <div class="auth__grid">
+
+      <div class="auth__copy">
+        <p class="label">Accounts</p>
+        <h2>One account, every check you have split.</h2>
+        <p>Sign up with your email or continue with an account you already have. Your receipts and your splits follow you from the web to your phone.</p>
+        <ul class="perks">
+          <li><span class="oozes oozes--sm">01</span> Every receipt and split saved to your history.</li>
+          <li><span class="oozes oozes--sm">02</span> The same account on web and on mobile.</li>
+          <li><span class="oozes oozes--sm">03</span> No card details, ever. OozeDues only does the math.</li>
+        </ul>
+      </div>
+
+      <div class="authcard">
+        <div class="slip__edge slip__edge--t"></div>
+
+        <div class="tabs" role="tablist" aria-label="Log in or create an account">
+          <button class="tab" type="button" role="tab" id="tabLogin"  aria-selected="true"  aria-controls="panelLogin">Log in</button>
+          <button class="tab" type="button" role="tab" id="tabSignup" aria-selected="false" aria-controls="panelSignup">Create account</button>
+        </div>
+
+        <div class="oauth">
+          <button type="button" data-oauth="google">
+            <svg width="16" height="16" viewBox="0 0 48 48" fill="#15200C" aria-hidden="true">
+              <path d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+              <path d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+              <path d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>
+              <path d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+            </svg>
+            <span id="oaGoogle">Continue with Google</span>
+          </button>
+        </div>
+
+        <div class="divider"><span id="dividerText">or use your email</span></div>
+
+        <form id="panelLogin" role="tabpanel" aria-labelledby="tabLogin" novalidate>
+          <div class="field">
+            <label for="liEmail">Email</label>
+            <input id="liEmail" name="login" type="email" autocomplete="email" placeholder="you@school.edu" required>
+          </div>
+          <div class="field">
+            <label for="liPass">Password</label>
+            <input id="liPass" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+          </div>
+          <button class="submit oozes oozes--pill" type="submit">Log in</button>
+          <p class="msg" id="liStatus" hidden></p>
+        </form>
+
+        <form id="panelSignup" role="tabpanel" aria-labelledby="tabSignup" novalidate hidden>
+          <div class="field--split">
+            <div class="field">
+              <label for="suFirst">First name</label>
+              <input id="suFirst" name="firstName" type="text" autocomplete="given-name" placeholder="Ana" required>
+            </div>
+            <div class="field">
+              <label for="suLast">Last name</label>
+              <input id="suLast" name="lastName" type="text" autocomplete="family-name" placeholder="Rivera" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="suEmail">Email</label>
+            <input id="suEmail" name="login" type="email" autocomplete="email" placeholder="you@school.edu" required>
+          </div>
+          <div class="field">
+            <label for="suPass">Password</label>
+            <input id="suPass" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" minlength="8" required>
+            <p class="hint">We will email you a link to verify your address before your first split.</p>
+          </div>
+          <button class="submit oozes oozes--pill" type="submit">Create account</button>
+          <p class="msg" id="suStatus" hidden></p>
+        </form>
+
+        <div id="panelLogged" hidden>
+          <p class="msg msg--good" id="loggedMsg"></p>
+          <a class="submit oozes oozes--pill" href="app.html">Open the app</a>
+          <p class="alt"><a href="history.html">Your history</a> · <a href="#auth" id="logoutLink">Log out</a></p>
+        </div>
+
+        <div class="slip__edge slip__edge--b"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="zone zone--paper" id="next">
+  <div class="wrap sec">
+    <div class="sec__head">
+      <p class="label">What's next</p>
+      <h2>Not built yet, but on the list.</h2>
+    </div>
+
+    <div class="next__item rv">
+      <span class="chip">Planned</span>
+      <h3>Fetch integration</h3>
+      <p>Pull in receipts you have already scanned in Fetch and split them without uploading anything twice.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="zone footzone">
+  <div class="wrap footzone__in">
+    <div>
+      <a class="brand" href="#top"><i></i>OOZEDUES</a>
+      <p class="stack">Built on MongoDB · Express · React · Node</p>
+    </div>
+
+    <div class="footzone__right">
+      <a class="ghlink" href="#" id="gh">GitHub Repository</a>
+      <p class="copyright">&copy; 2026 OozeDues. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   EDITABLE RECEIPT DEMO
+   All money is held in cents so nothing drifts on floating point.
+   ORIGINAL is the AI's first reading and is never mutated.
+   ITEMS is the corrected version the user is working on.
+   ============================================================ */
+const PEOPLE   = ['Ana','Marco','Sam'];
+const TAX_RATE = 0.065;
+const TIP_RATE = 0.20;
+
+const ORIGINAL = [
+  { name:'Guacamole y chips', cents: 900, who:['Ana','Marco','Sam'] },
+  { name:'Carne asada tacos', cents:1600, who:['Ana']              },
+  { name:'Birria ramen',      cents:1850, who:['Marco']            },
+  { name:'Horchata',          cents: 500, who:['Sam']              },
+  { name:'Churros',           cents: 900, who:['Sam']              }
+];
+const ITEMS = ORIGINAL.map(o => ({ ...o, who:[...o.who] }));
+
+const money = c => (c / 100).toFixed(2);
+
+function parseMoney(str){
+  const n = parseFloat(String(str).replace(/[^0-9.]/g, ''));
+  return Number.isFinite(n) && n > 0 ? Math.round(n * 100) : 0;
+}
+
+function totals(){
+  const subtotal = ITEMS.reduce((s,i) => s + i.cents, 0);
+  const tax = Math.round(subtotal * TAX_RATE);
+  const tip = Math.round(subtotal * TIP_RATE);
+  return { subtotal, tax, tip, total: subtotal + tax + tip };
+}
+
+/* Largest-remainder allocation. Guarantees the parts sum to the whole. */
+function allocate(total, weights){
+  const sum = weights.reduce((a,b) => a+b, 0);
+  if(sum <= 0) return weights.map(() => 0);
+  const exact = weights.map(w => total * w / sum);
+  const out = exact.map(Math.floor);
+  let left = total - out.reduce((a,b) => a+b, 0);
+  exact
+    .map((v,i) => ({ i, frac: v - Math.floor(v) }))
+    .sort((a,b) => b.frac - a.frac)
+    .forEach(o => { if(left > 0){ out[o.i]++; left--; } });
+  return out;
+}
+
+/* What each person owes before tax and tip.
+   A shared line is divided between everyone on it, to the cent. */
+function baseByPerson(){
+  const base = PEOPLE.map(() => 0);
+  ITEMS.forEach(it => {
+    const idxs = it.who.map(p => PEOPLE.indexOf(p)).filter(i => i >= 0);
+    if(!idxs.length) return;
+    const parts = allocate(it.cents, idxs.map(() => 1));
+    idxs.forEach((personIdx, k) => { base[personIdx] += parts[k]; });
+  });
+  return base;
+}
+
+const splitEvenly = () => allocate(totals().total, PEOPLE.map(() => 1));
+
+const splitByItem = () => {
+  const { tax, tip } = totals();
+  const base  = baseByPerson();
+  const extra = allocate(tax + tip, base);   // tax and tip, proportional to what you ordered
+  return base.map((b,i) => b + extra[i]);
+};
+
+const elItems  = document.getElementById('items');
+const elSplit  = document.getElementById('split');
+const elFoot   = document.getElementById('slipfoot');
+const elHint   = document.getElementById('edithint');
+const bEven    = document.getElementById('bEven');
+const bItem    = document.getElementById('bItem');
+const tSub     = document.getElementById('tSub');
+const tTax     = document.getElementById('tTax');
+const tTip     = document.getElementById('tTip');
+const tTotal   = document.getElementById('tTotal');
+
+let mode = 'even';
+
+/* Item rows are built once and never re-rendered, so typing never
+   loses focus mid-edit. Only the totals and the split refresh. */
+elItems.innerHTML = ITEMS.map((it, idx) => `
+  <div class="item" data-who="${it.who.join(',')}">
+    <div class="item__top">
+      <input class="in-name" type="text" value="${it.name}" data-idx="${idx}" aria-label="Item name">
+      <span class="row__dots"></span>
+      <input class="in-amt" type="text" inputmode="decimal" value="${money(it.cents)}" data-idx="${idx}" aria-label="Item price">
+    </div>
+    <div class="item__bot">
+      <div class="pchips">
+        ${PEOPLE.map(p => `
+          <button class="pchip${it.who.includes(p) ? ' on' : ''}" type="button"
+                  data-idx="${idx}" data-p="${p}" title="${p}"
+                  aria-label="${p}" aria-pressed="${it.who.includes(p)}">${p[0]}</button>`).join('')}
+      </div>
+      <span class="was"></span>
+    </div>
+  </div>`).join('');
+
+const rows = [...elItems.querySelectorAll('.item')];
+
+/* Size the name field to its contents so the dotted leader fills the gap */
+function sizeName(el){ el.style.width = Math.max(5, el.value.length + 1) + 'ch'; }
+elItems.querySelectorAll('.in-name').forEach(sizeName);
+
+elItems.addEventListener('input', e => {
+  const idx = Number(e.target.dataset.idx);
+  if(e.target.classList.contains('in-amt')){
+    ITEMS[idx].cents = parseMoney(e.target.value);
+    refresh(false);
+  } else if(e.target.classList.contains('in-name')){
+    ITEMS[idx].name = e.target.value;
+    sizeName(e.target);
+    refresh(false);
+  }
+});
+
+/* Tidy the price back to two decimals once the field loses focus */
+elItems.addEventListener('blur', e => {
+  if(e.target.classList.contains('in-amt')){
+    e.target.value = money(ITEMS[Number(e.target.dataset.idx)].cents);
+  }
+}, true);
+
+/* Tapping an initial adds or removes that person from the line.
+   Every line keeps at least one person on it. */
+elItems.addEventListener('click', e => {
+  const btn = e.target.closest('.pchip');
+  if(!btn) return;
+  const idx = Number(btn.dataset.idx);
+  const p   = btn.dataset.p;
+  const who = ITEMS[idx].who;
+
+  if(who.includes(p)){
+    if(who.length === 1) return;
+    ITEMS[idx].who = who.filter(x => x !== p);
+  } else {
+    ITEMS[idx].who = [...who, p].sort((a,b) => PEOPLE.indexOf(a) - PEOPLE.indexOf(b));
+  }
+
+  rows[idx].dataset.who = ITEMS[idx].who.join(',');
+  rows[idx].querySelectorAll('.pchip').forEach(c => {
+    const on = ITEMS[idx].who.includes(c.dataset.p);
+    c.classList.toggle('on', on);
+    c.setAttribute('aria-pressed', on);
+  });
+  refresh(false);
+});
+
+function refresh(animate){
+  const t = totals();
+  tSub.textContent   = money(t.subtotal);
+  tTax.textContent   = money(t.tax);
+  tTip.textContent   = money(t.tip);
+  tTotal.textContent = money(t.total);
+
+  /* Compare the working copy against the AI's original reading */
+  let corrected = 0;
+  ITEMS.forEach((it,i) => {
+    const priceChanged = it.cents !== ORIGINAL[i].cents;
+    const nameChanged  = it.name  !== ORIGINAL[i].name;
+    const notes = [];
+    if(priceChanged) notes.push('was ' + money(ORIGINAL[i].cents));
+    if(nameChanged)  notes.push('renamed');
+    if(notes.length) corrected++;
+    rows[i].querySelector('.was').textContent = notes.join(' · ');
+  });
+
+  elHint.textContent = corrected === 0
+    ? 'Tap to correct a line or change who shared it'
+    : corrected + (corrected === 1 ? ' line corrected' : ' lines corrected') + ' · original scan kept';
+
+  const amounts = mode === 'even' ? splitEvenly() : splitByItem();
+
+  elSplit.innerHTML = PEOPLE.map((p,i) => `
+    <div class="row" data-who="${p}">
+      <span class="row__name">${p}</span>
+      <span class="row__dots"></span>
+      <span class="row__amt">$${money(amounts[i])}</span>
+    </div>`).join('');
+
+  if(mode === 'even'){
+    const low    = Math.min(...amounts);
+    const extras = PEOPLE.filter((p,i) => amounts[i] > low);
+    elFoot.textContent = extras.length
+      ? `Split three ways. The extra cent goes to ${extras.join(' and ')} so the parts add up to $${money(t.total)}.`
+      : `Split three ways at $${money(low)} each.`;
+  } else {
+    const shared = ITEMS.some(i => i.who.length > 1);
+    elFoot.textContent = 'Tax and tip are shared in proportion to what each person ordered.'
+      + (shared ? ' Shared lines are divided between the people on them.' : '');
+  }
+
+  // Keep all receipt items fully visible in both split modes.
+  elItems.classList.remove('is-dim');
+
+  if(animate){
+    elSplit.classList.remove('pulse'); void elSplit.offsetWidth; elSplit.classList.add('pulse');
+  }
+
+  bEven.setAttribute('aria-pressed', mode === 'even');
+  bItem.setAttribute('aria-pressed', mode === 'item');
+
+  elSplit.querySelectorAll('.row').forEach(row => {
+    const who = row.dataset.who;
+    row.addEventListener('mouseenter', () => light(who));
+    row.addEventListener('mouseleave', () => light(null));
+  });
+}
+
+function light(who){
+  if(mode !== 'item') return;
+  rows.forEach(el =>
+    el.classList.toggle('is-lit', who !== null && el.dataset.who.split(',').includes(who)));
+}
+
+bEven.addEventListener('click', () => { mode = 'even'; refresh(true); });
+bItem.addEventListener('click', () => { mode = 'item'; refresh(true); });
+refresh(false);
+
+/* ============================================================
+   AUTH TABS
+   ============================================================ */
+const tabLogin  = document.getElementById('tabLogin');
+const tabSignup = document.getElementById('tabSignup');
+const panels = { login: document.getElementById('panelLogin'), signup: document.getElementById('panelSignup') };
+
+function showTab(which){
+  const isLogin = which === 'login';
+  tabLogin.setAttribute('aria-selected', isLogin);
+  tabSignup.setAttribute('aria-selected', !isLogin);
+  panels.login.hidden  = !isLogin;
+  panels.signup.hidden = isLogin;
+
+  document.getElementById('oaGoogle').textContent  = isLogin ? 'Continue with Google' : 'Sign up with Google';
+  document.getElementById('dividerText').textContent = isLogin ? 'or use your email' : 'or sign up with email';
+}
+tabLogin.addEventListener('click',  () => showTab('login'));
+tabSignup.addEventListener('click', () => showTab('signup'));
+
+document.querySelectorAll('[data-tab]').forEach(el => {
+  el.addEventListener('click', () => { const t = el.dataset.tab; if(t) showTab(t); });
+});
+
+/* ============================================================
+   SESSION
+   Token and user live in localStorage (od_token, od_user), with
+   an in-memory fallback so sandboxed previews do not crash.
+   ============================================================ */
+const API_BASE = (location.port && location.port !== '5000') ? 'http://localhost:5000' : '';
+
+const store = (() => {
+  try{
+    const k = '__od_probe';
+    localStorage.setItem(k, '1');
+    localStorage.removeItem(k);
+    return localStorage;
+  }catch(err){
+    const mem = {};
+    return {
+      getItem: k => Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null,
+      setItem: (k, v) => { mem[k] = String(v); },
+      removeItem: k => { delete mem[k]; }
+    };
+  }
+})();
+
+function getUser(){
+  try{ return JSON.parse(store.getItem('od_user') || '{}') || {}; }
+  catch(err){ return {}; }
+}
+
+/* If Google OAuth redirects back with ?token=...&id=...&firstName=...
+   &lastName=..., pick the session up and clean the URL. The backend
+   callback needs to append those params for Google login to complete. */
+(function pickupToken(){
+  const q = new URLSearchParams(location.search);
+  const t = q.get('token');
+  if(!t) return;
+  store.setItem('od_token', t);
+  store.setItem('od_user', JSON.stringify({
+    id: q.get('id') || '',
+    firstName: q.get('firstName') || '',
+    lastName: q.get('lastName') || ''
+  }));
+  history.replaceState(null, '', location.pathname + location.hash);
+})();
+
+/* Auth-aware chrome: with a token the CTAs point into the app */
+const navLogin    = document.getElementById('navLogin');
+const navCta      = document.getElementById('navCta');
+const heroCta     = document.getElementById('heroCta');
+const panelLogged = document.getElementById('panelLogged');
+const loggedMsg   = document.getElementById('loggedMsg');
+const tabsEl      = document.querySelector('.tabs');
+const oauthEl     = document.querySelector('.oauth');
+const dividerEl   = document.querySelector('.divider');
+
+function paintAuthState(){
+  const logged = !!store.getItem('od_token');
+  const u = getUser();
+
+  navLogin.textContent = logged ? 'History' : 'Log in';
+  navLogin.href        = logged ? 'history.html' : '#auth';
+  navCta.textContent   = logged ? 'Open app' : 'Sign up';
+  navCta.href          = logged ? 'app.html' : '#auth';
+  heroCta.textContent  = logged ? 'Open the app' : 'Create an account';
+  heroCta.href         = logged ? 'app.html' : '#auth';
+
+  if(logged){
+    navLogin.removeAttribute('data-tab');
+    navCta.removeAttribute('data-tab');
+    heroCta.removeAttribute('data-tab');
+  }else{
+    navLogin.dataset.tab = 'login';
+    navCta.dataset.tab   = 'signup';
+    heroCta.dataset.tab  = 'signup';
+  }
+
+  tabsEl.hidden = logged;
+  oauthEl.hidden = logged;
+  dividerEl.hidden = logged;
+  panelLogged.hidden = !logged;
+
+  if(logged){
+    panels.login.hidden  = true;
+    panels.signup.hidden = true;
+    const name = ((u.firstName || '') + ' ' + (u.lastName || '')).trim() || 'your account';
+    loggedMsg.textContent = 'Logged in as ' + name + '.';
+  }else{
+    showTab(panels.signup.hidden ? 'login' : 'signup');
+  }
+}
+
+document.getElementById('logoutLink').addEventListener('click', e => {
+  e.preventDefault();
+  store.removeItem('od_token');
+  store.removeItem('od_user');
+  paintAuthState();
+});
+
+paintAuthState();
+
+/* ============================================================
+   GOOGLE OAUTH
+   The only OAuth provider the backend has. GET /api/google
+   starts the passport redirect to the Google consent screen.
+   ============================================================ */
+document.querySelectorAll('[data-oauth]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    window.location.href = API_BASE + '/api/google';
+  });
+});
+
+/* ============================================================
+   EMAIL AUTH  (real API)
+   POST /api/register  { firstName, lastName, login, password }
+   POST /api/login     { login, password } -> { token, id, firstName, lastName }
+   The login field is the email address. The JWT expires in an hour.
+   ============================================================ */
+function setMsg(el, text, kind){
+  el.hidden = false;
+  el.className = 'msg' + (kind ? ' msg--' + kind : '');
+  el.textContent = text;
+}
+
+async function postJSON(path, body){
+  const res = await fetch(API_BASE + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  let data = null;
+  try{ data = await res.json(); }catch(err){ data = null; }
+  return { res, data };
+}
+
+const liStatus = document.getElementById('liStatus');
+const suStatus = document.getElementById('suStatus');
+
+panels.login.addEventListener('submit', async e => {
+  e.preventDefault();
+  if(!panels.login.checkValidity()){ panels.login.reportValidity(); return; }
+  const btn = panels.login.querySelector('.submit');
+  btn.disabled = true;
+  setMsg(liStatus, 'Checking with the server', '');
+  try{
+    const body = Object.fromEntries(new FormData(panels.login));
+    const { res, data } = await postJSON('/api/login', body);
+    if(res.ok && data && data.token){
+      store.setItem('od_token', data.token);
+      store.setItem('od_user', JSON.stringify({
+        id: data.id, firstName: data.firstName, lastName: data.lastName
+      }));
+      setMsg(liStatus, 'Logged in. Opening the app', 'good');
+      window.location.href = 'app.html';
+    }else{
+      setMsg(liStatus, (data && data.error) || 'Username / password combination incorrect.', 'bad');
+    }
+  }catch(err){
+    setMsg(liStatus, 'Could not reach the server. Is it running?', 'bad');
+  }finally{
+    btn.disabled = false;
+  }
+});
+
+panels.signup.addEventListener('submit', async e => {
+  e.preventDefault();
+  if(!panels.signup.checkValidity()){ panels.signup.reportValidity(); return; }
+  const btn = panels.signup.querySelector('.submit');
+  btn.disabled = true;
+  setMsg(suStatus, 'Creating your account', '');
+  try{
+    const body = Object.fromEntries(new FormData(panels.signup));
+    const { res, data } = await postJSON('/api/register', body);
+    if(res.ok && (!data || !data.error)){
+      panels.signup.reset();
+      setMsg(suStatus, 'Account created. Check your inbox for the verification link, then log in.', 'good');
+    }else{
+      setMsg(suStatus, (data && data.error) || 'Something went wrong. Try again.', 'bad');
+    }
+  }catch(err){
+    setMsg(suStatus, 'Could not reach the server. Is it running?', 'bad');
+  }finally{
+    btn.disabled = false;
+  }
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.14 });
+  document.querySelectorAll('.rv').forEach((el,i) => {
+    el.style.transitionDelay = (i % 4) * 70 + 'ms';
+    io.observe(el);
+  });
+} else {
+  document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+}
+
+/* Drop your repo URL here */
+document.getElementById('gh').href = '#';
+</script>
+<footer class="footer">
+  <p>&copy; 2026 OozeDues. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
